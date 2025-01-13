@@ -37,7 +37,9 @@ public:
     // The order of type conversion is important: later ones are tried earlier.
     addConversion([](Type type) { return type; });
     addConversion([](triton::PointerType ptrType) {
-      return UnrankedMemRefType::get(ptrType.getPointeeType(), 0);
+      // return UnrankedMemRefType::get(ptrType.getPointeeType(), 0);
+      SmallVector<int64_t, 4> dynamicDims(1, ShapedType::kDynamic);
+      return MemRefType::get(dynamicDims, ptrType.getPointeeType());
     });
     addConversion([](TensorType tensorType) -> Type {
       auto elemType = tensorType.getElementType();
