@@ -102,7 +102,7 @@ public:
     {
       RewritePatternSet patterns(&getContext());
       populateTritonToLinalgCanonicalizationPatterns(patterns);
-      if (failed(applyPatternsAndFoldGreedily(moduleOp, std::move(patterns)))) {
+      if (failed(applyPatternsGreedily(moduleOp, std::move(patterns)))) {
         signalPassFailure();
       }
     }
