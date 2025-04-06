@@ -37,7 +37,12 @@ public:
     // The order of type conversion is important: later ones are tried earlier.
     addConversion([](Type type) { return type; });
     addConversion([](triton::PointerType ptrType) {
-      return UnrankedMemRefType::get(ptrType.getPointeeType(), 0);
+      // Get the shape information from the pointer type
+      // auto shape = ptrType.getShape();
+      // Create a ranked memref with the same shape and element type
+      // return MemRefType::get(shape, ptrType.getPointeeType());
+          return UnrankedMemRefType::get(ptrType.getPointeeType(), 0);
+
     });
     addConversion([](TensorType tensorType) -> Type {
       auto elemType = tensorType.getElementType();
