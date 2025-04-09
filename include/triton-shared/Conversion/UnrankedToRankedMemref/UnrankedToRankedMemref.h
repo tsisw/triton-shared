@@ -1,0 +1,14 @@
+#ifndef TRITON_SHARED_CONVERSION_UNRANKEDTORANKEDMEMREF_UNRANKEDTORANKEDMEMREF_H
+#define TRITON_SHARED_CONVERSION_UNRANKEDTORANKEDMEMREF_UNRANKEDTORANKEDMEMREF_H
+
+#include "mlir/Pass/Pass.h"
+
+namespace mlir {
+namespace triton {
+
+std::unique_ptr<Pass> createUnrankedToRankedMemrefPass();
+
+} // namespace triton
+} // namespace mlir
+
+#endif // TRITON_SHARED_CONVERSION_UNRANKEDTORANKEDMEMREF_UNRANKEDTORANKEDMEMREF_H 
