@@ -294,6 +294,10 @@ public:
             llvm::TypeSwitch<Operation *, LogicalResult>(user)
 
                 .Case<triton::PtrToIntOp>([&](triton::PtrToIntOp op) {
+                  if (isa<RankedTensorType>(op.getType())) {
+                    return failure();
+                  }
+
                   auto offsetInfo = offsetMap.at(op.getSrc());
 
                   OpBuilder b{op};
@@ -382,6 +386,7 @@ public:
 
                   return success();
                 })
+               .Case<tts::MakeGatherScatterTensorPtrOp>([&](Operation *op){return success();})
                 .Case<triton::LoadOp, triton::StoreOp, triton::MakeTensorPtrOp,
                       tts::MakeTensorPtrOp>([&](Operation *op) {
                   // Special case:
